@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Surat Cinta Spesial ❤️</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --pink-bg: #ffe4e9;
+        --pink-paper: #fff5f7;
+        --pink-accent: #ff8fa3;
+        --pink-dark: #c9184a;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: var(--pink-bg);
+        font-family: "Quicksand", sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        overflow-x: hidden;
+        /* Tambahan agar tidak mepet di HP */
+        padding: 15px;
+        box-sizing: border-box;
+      }
+
+      .leaf {
+        position: absolute;
+        width: 15px;
+        height: 15px;
+        background: #ffb3c1;
+        border-radius: 10px 0 10px 0;
+        animation: fall linear infinite;
+        z-index: -1;
+      }
+
+      @keyframes fall {
+        0% {
+          transform: translateY(-10vh) rotate(0deg);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(110vh) rotate(360deg);
+          opacity: 0;
+        }
+      }
+
+      .letter-card {
+        /* Dibuat responsive menggunakan max-width */
+        width: 100%;
+        max-width: 380px;
+        background: var(--pink-paper);
+        padding: 30px;
+        border-radius: 20px;
+        box-shadow: 0 15px 35px rgba(201, 24, 74, 0.2);
+        text-align: center;
+        border: 2px solid white;
+        position: relative;
+        z-index: 10;
+        box-sizing: border-box;
+      }
+
+      .gif-slot {
+        width: 100%;
+        max-width: 180px;
+        aspect-ratio: 1/1;
+        margin: 0 auto 20px;
+        border-radius: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #fff;
+      }
+
+      .gif-slot img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 10px;
+        transition: all 0.5s ease;
+      }
+
+      h1 {
+        font-family: "Dancing Script", cursive;
+        color: var(--pink-dark);
+        margin: 10px 0;
+        font-size: 1.8rem;
+      }
+
+      .message {
+        font-size: 15px;
+        color: #555;
+        line-height: 1.6;
+        min-height: 80px;
+        margin-bottom: 15px;
+      }
+
+      #lyrics-container {
+        font-size: 14px;
+        color: var(--pink-dark);
+        font-style: italic;
+        min-height: 45px;
+        display: none;
+        padding: 15px 10px;
+        border-top: 1px dashed var(--pink-accent);
+        margin-top: 10px;
+      }
+
+      #lyrics-text {
+        display: inline-block;
+        transition: opacity 1.2s ease-in-out;
+        opacity: 0;
+      }
+
+      #open-btn {
+        background: var(--pink-accent);
+        color: white;
+        border: none;
+        padding: 12px 30px;
+        border-radius: 25px;
+        font-weight: bold;
+        margin-top: 20px;
+        cursor: pointer;
+        box-shadow: 0 4px 10px rgba(255, 143, 163, 0.4);
+        transition: 0.3s;
+        font-size: 1rem;
+      }
+
+      #open-btn:hover {
+        transform: scale(1.05);
+        background: var(--pink-dark);
+      }
+
+      /* Khusus layar kecil (HP jadul/layar sempit) */
+      @media (max-width: 320px) {
+        .letter-card {
+          padding: 20px;
+        }
+        h1 {
+          font-size: 1.4rem;
+        }
+        .message {
+          font-size: 13px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="letter-card" id="card">
+      <div class="gif-slot">
+        <img
+          id="bubu-img"
+          src="dudu-bubu.gif"
+          alt="Dudu & Bubu"
+          onerror="
+            this.src =
+              'https://media.tenor.com/7vYp7vGZ8d8AAAAi/bubu-dudu-sseeyall.gif'
+          "
+        />
+      </div>
+
+      <h1 id="title">Halo Timut!</h1>
+
+      <p class="message" id="text-surat">
+        Ada pesan rahasia di dalam sini... Klik tombol di bawah untuk
+        membacanya.
+      </p>
+
+      <div id="lyrics-container">
+        <span id="lyrics-text"></span>
+      </div>
+
+      <button id="open-btn" onclick="startLetter()">Buka Surat ❤️</button>
+    </div>
+
+    <audio id="loveAudio" loop>
+      <source src="lagusurat.mp3" type="audio/mpeg" />
+    </audio>
+
+    <script>
+      const audio = document.getElementById("loveAudio");
+      const textElement = document.getElementById("text-surat");
+      const gifElement = document.getElementById("bubu-img");
+      const lyricsBox = document.getElementById("lyrics-container");
+      const lyricsText = document.getElementById("lyrics-text");
+
+      const fullMessage =
+        "Target kamu adalah target kita juga. Aku bakal selalu ada di garda terdepan buat support kamu. Gak ada yang mustahil kalau kita lakuin bareng-bareng. Terus melangkah ya, aku bangga banget sama kamu. I love you more than words can say! 🌸🧸💖";
+
+      const lyrics = [
+        "Late One Night...",
+        "You Dug Me Out of My Grave ✨",
+        "And Saved My Heart 🤍",
+        "From The Fate of Ophelia 🌹",
+        "Keep It One Hundred...",
+        "On The Land 🌈",
+        "The Sea, The Sky 🌊☁️",
+        "Pledge Allegiance To Your Hands 🤝",
+        "Your Team, Your Vibes 🌟",
+        "Don't Care Where You've Been 🌍",
+        "Cause Now You're Mine 💕",
+        "It's Bout To Be The Sleepless Nights 🌙",
+        "You've Been Dreaming of 🌠",
+        "The Fate of Ophelia 🌹",
+        "",
+      ];
+
+      // Durasi tetap sesuai permintaan kamu
+      const lyricDurations = [
+        600, 900, 800, 1700, 500, 500, 550, 700, 600, 800, 750, 700, 1800, 1400,
+        500,
+      ];
+
+      let lyricIndex = 0;
+      let isPlaying = false;
+
+      function runLyrics() {
+        if (!isPlaying) return;
+
+        lyricsText.style.opacity = 1;
+
+        setTimeout(() => {
+          lyricsText.innerText = lyrics[lyricIndex];
+          lyricsText.style.opacity = 1;
+
+          let currentWait = lyricDurations[lyricIndex];
+          lyricIndex = (lyricIndex + 1) % lyrics.length;
+
+          setTimeout(runLyrics, currentWait);
+        }, 1100);
+      }
+
+      function startLetter() {
+        gifElement.src = "bubu.gif";
+        audio
+          .play()
+          .then(() => {
+            isPlaying = true;
+            lyricsBox.style.display = "block";
+            runLyrics();
+          })
+          .catch((error) => {
+            console.log("Audio play failed:", error);
+          });
+
+        document.getElementById("open-btn").style.display = "none";
+        document.getElementById("title").innerText = "For Timut 💌";
+
+        textElement.innerHTML = "";
+        let i = 0;
+        function type() {
+          if (i < fullMessage.length) {
+            textElement.innerHTML += fullMessage.charAt(i);
+            i++;
+            setTimeout(type, 50);
+          }
+        }
+        type();
+
+        setInterval(createLeaf, 300);
+      }
+
+      function createLeaf() {
+        const leaf = document.createElement("div");
+        leaf.classList.add("leaf");
+        leaf.style.left = Math.random() * 100 + "vw";
+        leaf.style.animationDuration = Math.random() * 3 + 2 + "s";
+        leaf.style.opacity = Math.random();
+        document.body.appendChild(leaf);
+        setTimeout(() => leaf.remove(), 5000);
+      }
+    </script>
+  </body>
+</html>
